@@ -2,11 +2,11 @@ package Models;
 
 import java.sql.Date;
 
-public class Reservation {
+public class Rating {
     public int Id;
     public int BookId;
     public int BorrowerId;
-    public Date BorrowDate;
-    public Date ReturnDate;
+    public int Rating;
+    public String Reviews;
     public Date CreatedDate;
 }

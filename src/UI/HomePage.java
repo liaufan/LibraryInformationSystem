@@ -1,6 +1,8 @@
 package UI;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class HomePage extends JFrame {
     private JPanel HomePanel;
@@ -14,15 +16,22 @@ public class HomePage extends JFrame {
 
         setVisible(true);
 
-        JPanel BookTab = new BookTab();
-        JPanel BorrowerTab = new BorrowerTab();
-        JPanel TransactionTab = new TransactionTab();
-        JPanel ReportTab = new ReportTab();
+        BookTab bookTab = new BookTab();
+        BorrowerTab borrowerTab = new BorrowerTab();
+        TransactionTab transactionTab = new TransactionTab();
+        ReportTab reportTab = new ReportTab();
 
-        MainTabbedPane.addTab("Books", BookTab);
-        MainTabbedPane.addTab("Borrowers", BorrowerTab);
-        MainTabbedPane.addTab("Transactions", TransactionTab);
-        MainTabbedPane.addTab("Reports", ReportTab);
+        MainTabbedPane.addTab("Books", bookTab);
+        MainTabbedPane.addTab("Borrowers", borrowerTab);
+        MainTabbedPane.addTab("Transactions", transactionTab);
+        MainTabbedPane.addTab("Reports", reportTab);
+
+        MainTabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                transactionTab.QueryAllTransactions();
+            }
+        });
 
 
     }

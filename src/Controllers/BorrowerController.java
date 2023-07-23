@@ -1,14 +1,14 @@
 package Controllers;
 
-import Applications.Book.AddBookCommand;
 import Applications.Book.GetAllBooksQuery;
+import Applications.Borrower.AddBorrowerCommand;
 import Models.Book;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BorrowerController {
-    public void AddBorrower(AddBookCommand command) throws SQLException {
+    public void AddBorrower(AddBorrowerCommand command) throws SQLException {
         command.Handle();
     }
 

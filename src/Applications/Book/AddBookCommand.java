@@ -26,5 +26,6 @@ public class AddBookCommand {
 
         books.add(book);
         _context.UpdateBooks(books);
+        _context.Dispose();
     }
 }

@@ -108,6 +108,7 @@ public class ApplicationDbContext {
     }
 
     public void DatabaseSeed(){
+        // Initialize Database schemas
         try {
             Statement statement = connection.createStatement();
 
@@ -176,6 +177,8 @@ public class ApplicationDbContext {
                 System.out.println(sql);
             } catch (Exception ignored) {
             } //Skip if table already created
+
+            // TODO: pump initialize data for all tables
         }catch(SQLException ex){
             System.out.println(ex);
         }

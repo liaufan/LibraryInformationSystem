@@ -38,13 +38,14 @@ public class BookTab extends JPanel {
         if (titleTextField.getText().equals("") || authorTextField.getText().equals("") || publicationYearTextField.getText().equals("")) {
             JOptionPane.showMessageDialog(BookPanel, "Please input all the fields.");
         } else {
-            AddBookCommand command = new AddBookCommand();
-            command.Title = titleTextField.getText();
-            command.Author = authorTextField.getText();
-            command.PublicationYear = publicationYearTextField.getText();
-            command.IsAvailable = isAvailableCheckBox.isSelected();
             try {
+                AddBookCommand command = new AddBookCommand();
+                command.Title = titleTextField.getText();
+                command.Author = authorTextField.getText();
+                command.PublicationYear = publicationYearTextField.getText();
+                command.IsAvailable = isAvailableCheckBox.isSelected();
                 bookController.AddBook(command);
+
                 JOptionPane.showMessageDialog(BookPanel, "New book added.");
                 titleTextField.setText("");
                 authorTextField.setText("");
@@ -58,8 +59,8 @@ public class BookTab extends JPanel {
     }
 
     public void LoadBooks() {
-        GetAllBooksQuery query = new GetAllBooksQuery();
         try{
+            GetAllBooksQuery query = new GetAllBooksQuery();
             allBooks = bookController.GetAllBooks(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allBooks.size() > 0){

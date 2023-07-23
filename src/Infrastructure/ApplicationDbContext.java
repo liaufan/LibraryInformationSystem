@@ -61,7 +61,7 @@ public class ApplicationDbContext {
     public ArrayList<Book> QueryBooks(String whereClause) throws SQLException {
         ArrayList<Book> responses = new ArrayList<>();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM Books WHERE" + whereClause + ";");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Books WHERE " + whereClause + ";");
 
         while(resultSet.next()){
             Book book = new Book();
@@ -105,6 +105,47 @@ public class ApplicationDbContext {
 
             statement.executeUpdate(sql);
         }
+    }
+
+    public void AddTransaction(ArrayList<Transaction> transactions) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        for(Transaction transaction: transactions){
+            String sql = "";
+
+                //Insert new row
+                sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + transaction.BookId + "', ";
+                sql += "'" + transaction.BorrowerId + "', ";
+                sql += "'" + transaction.BorrowDate + "', ";
+                sql += "'" + transaction.ReturnDate + "', ";
+                sql += transaction.IsReturned + ", ";
+                sql += "'" + transaction.CreatedDate + "');";
+
+            statement.executeUpdate(sql);
+        }
+    }
+
+    public ArrayList<Transaction> QueryTransaction(String whereClause) throws SQLException {
+        ArrayList<Transaction> responses = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Transactions WHERE " + whereClause + ";");
+
+        while(resultSet.next()){
+            Transaction transaction = new Transaction();
+
+            transaction.Id = resultSet.getInt("Id");
+            transaction.BookId = resultSet.getInt("BookId");
+            transaction.BorrowerId = resultSet.getInt("BorrowerId");
+            transaction.BorrowDate = resultSet.getDate("BorrowDate");
+            transaction.ReturnDate = resultSet.getDate("ReturnDate");
+            transaction.IsReturned = resultSet.getBoolean("IsReturned");
+            transaction.CreatedDate = resultSet.getDate("CreatedDate");
+
+            responses.add(transaction);
+        }
+
+        return responses;
     }
 
     public void DatabaseSeed(){

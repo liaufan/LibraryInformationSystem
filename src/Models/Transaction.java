@@ -8,6 +8,7 @@ public class Transaction {
     public int BorrowerId;
     public Date BorrowDate;
     public Date ReturnDate;
+    public Date ExpectedReturnDate;
     public Boolean IsReturned;
     public Date CreatedDate;
 }

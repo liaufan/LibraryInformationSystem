@@ -98,7 +98,7 @@ public class ApplicationDbContext {
                 sql += "Author = " + "'" + book.Author + "', ";
                 sql += "PublicationYear = " + "'" + book.PublicationYear + "', ";
                 sql += "IsAvailable = " + book.IsAvailable + ", ";
-                sql += "CreatedDate = " + "'" + book.CreatedDate + "'";
+                sql += "CreatedDate = " + "'" + book.CreatedDate + "' ";
                 sql += "WHERE Id = " + book.Id + ";";
             }
             System.out.println(sql);
@@ -168,14 +168,17 @@ public class ApplicationDbContext {
                 sql += "'" + transaction.CreatedDate + "');";
             } else {
                 //Update existing row by Id
-                sql += "UPDATE Books SET";
-                sql += "'" + transaction.BookId + "', ";
-                sql += "'" + transaction.BorrowerId + "', ";
-                sql += "'" + transaction.BorrowDate + "', ";
-                sql += "'" + transaction.ReturnDate + "', ";
-                sql += transaction.IsReturned + ", ";
-                sql += "'" + transaction.CreatedDate + "');";
+                sql += "UPDATE Transactions SET ";
+                sql += "BookId = '" + transaction.BookId + "', ";
+                sql += "BorrowerId = '" + transaction.BorrowerId + "', ";
+                sql += "BorrowDate = '" + transaction.BorrowDate + "', ";
+                sql += "ReturnDate = '" + new Date(System.currentTimeMillis()) + "', ";
+                sql += "ExpectedReturnDate = '" + transaction.ExpectedReturnDate + "', ";
+                sql += "IsReturned = '" + "1" + "', ";
+                sql += "CreatedDate = '" + transaction.CreatedDate + "' ";
+                sql += "WHERE Id = " + transaction.Id + ";";
             }
+            System.out.println(sql);
 
             statement.executeUpdate(sql);
         }
@@ -186,7 +189,7 @@ public class ApplicationDbContext {
     public ArrayList<Transaction> QueryTransaction(String whereClause) throws SQLException {
         ArrayList<Transaction> responses = new ArrayList<>();
         Statement statement = connection.createStatement();
-        System.out.println("SELECT * FROM Transactions WHERE " + whereClause + ";");
+
         ResultSet resultSet = statement.executeQuery("SELECT * FROM Transactions WHERE " + whereClause + ";");
 
         while(resultSet.next()){

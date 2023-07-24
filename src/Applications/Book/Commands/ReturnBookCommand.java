@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 public class ReturnBookCommand {
     public int TransactionId;
-    public int BookId;
+    private int BookId;
     private ApplicationDbContext _context = new ApplicationDbContext();
+    private Transaction transaction = new Transaction();
     public void Handle() throws Exception {
         //return : query in Transaction Table for book id and
         // IsReturned = false. Then need to set IsReturned = true and in Book Table IsAvailable = true
@@ -20,13 +21,10 @@ public class ReturnBookCommand {
             throw new Exception("transaction not found");
         }
         else{
-            for(Transaction transaction: transactions){
-                transaction.IsReturned = true;
-                this.BookId = transaction.BookId;
-            }
-
+            transaction = transactions.get(0);
+            transaction.IsReturned = true;
         }
-        ArrayList<Book> books = _context.QueryBooks("Id = " + this.BookId);
+        ArrayList<Book> books = _context.QueryBooks("Id = " + transaction.BookId);
 
         for(Book book: books){
             book.IsAvailable = true;

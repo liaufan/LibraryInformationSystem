@@ -40,12 +40,12 @@
           <text value="View All Transaction"/>
         </properties>
       </component>
-      <component id="6f745" class="javax.swing.JButton" binding="button1" default-binding="true">
+      <component id="6f745" class="javax.swing.JButton" binding="borrowedBookBtn">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Button"/>
+          <text value="View Borrowed Books"/>
         </properties>
       </component>
       <component id="b9aa0" class="javax.swing.JLabel">

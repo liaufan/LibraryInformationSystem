@@ -41,7 +41,7 @@ public class BorrowBookCommand {
         transaction.CreatedDate = new Date(System.currentTimeMillis());
 
         transactions.add(transaction);
-        _context.AddTransaction(transactions);
+        _context.UpdateTransaction(transactions);
 
         _context.Dispose();
         //return : query in Transaction Table for book id and

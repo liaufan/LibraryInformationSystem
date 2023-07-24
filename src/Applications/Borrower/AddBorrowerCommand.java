@@ -25,7 +25,7 @@ public class AddBorrowerCommand {
         borrower.CreatedDate = new Date(System.currentTimeMillis());
 
         borrowers.add(borrower);
-
+        _context.UpdateBorrowers(borrowers);
         _context.Dispose();
     }
 }

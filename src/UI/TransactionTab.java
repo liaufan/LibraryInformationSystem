@@ -1,13 +1,15 @@
 package UI;
 
+import Applications.Book.Commands.ReturnBookCommand;
 import Applications.Transaction.QueryAllTransactions;
 import Controllers.TransactionController;
 import Models.Transaction;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class TransactionTab extends JPanel {
@@ -24,9 +26,14 @@ public class TransactionTab extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 var res = JOptionPane.showConfirmDialog(TransactionPanel, "Return Book?");
-                if(res==0){
+                var isReturned = transactionTable.getValueAt(transactionTable.getSelectedRow(), 5).toString();
+                if(res==0 && isReturned=="false"){
                     var transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
                     ReturnBook(Integer.valueOf(transactionID));
+                    QueryAllTransactions();
+                }
+                else{
+                    JOptionPane.showMessageDialog(TransactionPanel, "Book is already returned");
                 }
             }
 

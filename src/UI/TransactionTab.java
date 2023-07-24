@@ -45,7 +45,7 @@ public class TransactionTab extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 var res = JOptionPane.showConfirmDialog(TransactionPanel, "Return Book?");
-                var isReturned = transactionTable.getValueAt(transactionTable.getSelectedRow(), 5).toString();
+                var isReturned = transactionTable.getValueAt(transactionTable.getSelectedRow(), 6).toString();
                 if(res==0 && isReturned=="false"){
                     var transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
                     ReturnBook(Integer.valueOf(transactionID));
@@ -56,13 +56,19 @@ public class TransactionTab extends JPanel {
                     try {
                         transactions = transactionController.GetTransaction(queryTrans);
                         var ratingScore = JOptionPane.showInputDialog(TransactionPanel, "Please give this book a rating (0-5)");
-                        var ratingReview = JOptionPane.showInputDialog(TransactionPanel, "Please let us know how much you like this book");
-                        rateBook(transactions.get(0), ratingScore, ratingReview);
+                        if(ratingScore != null){
+                            var ratingReview = JOptionPane.showInputDialog(TransactionPanel, "Please let us know how much you like this book");
+                            if(ratingReview == null){
+                                ratingReview = "NO REVIEW";
+                            }
+                            rateBook(transactions.get(0), ratingScore, ratingReview);
+                        }
+
                     } catch (SQLException ex) {
                         throw new RuntimeException(ex);
                     }
                 }
-                else{
+                else if (res==0 && isReturned=="true"){
                     JOptionPane.showMessageDialog(TransactionPanel, "Book is already returned");
                 }
 
@@ -109,20 +115,22 @@ public class TransactionTab extends JPanel {
                 tableModel.addColumn("Borrower ID");
                 tableModel.addColumn("Borrowed Date");
                 tableModel.addColumn("Returned Date");
+                tableModel.addColumn("Expected Return Date");
                 tableModel.addColumn("Is Returned");
                 tableModel.addColumn("Record Created Date");
                 allTransactions.forEach((transaction) -> {
-                    Object[] data = {transaction.Id, transaction.BookId, transaction.BorrowerId, transaction.BorrowDate, transaction.ReturnDate,transaction.IsReturned ,transaction.CreatedDate};
+                    Object[] data = {transaction.Id, transaction.BookId, transaction.BorrowerId, transaction.BorrowDate, transaction.ReturnDate, transaction.ExpectedReturnDate, transaction.IsReturned ,transaction.CreatedDate};
                     tableModel.addRow(data);
                 });
                 transactionTable.setModel(tableModel);
-                transactionTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+                transactionTable.getColumnModel().getColumn(0).setPreferredWidth(30);
                 transactionTable.getColumnModel().getColumn(1).setPreferredWidth(60);
                 transactionTable.getColumnModel().getColumn(2).setPreferredWidth(80);
                 transactionTable.getColumnModel().getColumn(3).setPreferredWidth(100);
                 transactionTable.getColumnModel().getColumn(4).setPreferredWidth(100);
                 transactionTable.getColumnModel().getColumn(5).setPreferredWidth(100);
                 transactionTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+                transactionTable.getColumnModel().getColumn(7).setPreferredWidth(100);
             } else {
                 transactionTable.setVisible(false);
             }

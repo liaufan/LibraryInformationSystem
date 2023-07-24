@@ -179,15 +179,15 @@ public class BookTab extends JPanel {
                 };
                 avgRating = avgRating/ratings.size();
                 allRatingTable.setModel(tableModel);
-                allRatingTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                allRatingTable.getColumnModel().getColumn(1).setPreferredWidth(220);
+                allRatingTable.getColumnModel().getColumn(0).setPreferredWidth(30);
+                allRatingTable.getColumnModel().getColumn(1).setPreferredWidth(50);
                 allRatingTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                allRatingTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+                allRatingTable.getColumnModel().getColumn(3).setPreferredWidth(100);
                 allRatingTable.getColumnModel().getColumn(4).setPreferredWidth(50);
-                allRatingTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+                allRatingTable.getColumnModel().getColumn(5).setPreferredWidth(180);
                 JComponent[] dialog = new JComponent[]{
                         new JLabel(ratings.get(0).BookName),
-                        new JLabel("Average Ratings: " + String.valueOf(Math.round(avgRating * 100) / 100)),
+                        new JLabel("Average Ratings: " + String.valueOf(avgRating)),
                         new JScrollPane(allRatingTable)
                 };
                 JOptionPane.showMessageDialog(BookPanel ,dialog , "Book Recommendations", JOptionPane.PLAIN_MESSAGE);

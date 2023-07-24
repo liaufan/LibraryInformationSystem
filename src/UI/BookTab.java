@@ -2,17 +2,22 @@ package UI;
 
 import Applications.Book.Commands.AddBookCommand;
 import Applications.Book.Commands.BorrowBookCommand;
+import Applications.Book.Commands.RateBookCommand;
 import Applications.Book.Queries.QueryAllBooks;
 import Applications.Book.Queries.QueryBook;
+import Applications.Book.Queries.QueryBookRatings;
 import Applications.Transaction.AddTransactionCommand;
 import Controllers.BookController;
 import Controllers.TransactionController;
 import Models.Book;
+import Models.Rating;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,15 +30,45 @@ public class BookTab extends JPanel {
     private JTextField publicationYearTextField;
     private JButton addBookButton;
     private JTable allBooksTable;
+    private JTable allRatingTable;
     private JTextField bookIDTextField;
     private JTextField borrowerIDTextField;
     private JButton borrowBookButton;
     private BookController bookController = new BookController();
     private TransactionController transactionController = new TransactionController();
     private ArrayList<Book> allBooks = new ArrayList();
+    private ArrayList<Rating> ratings = new ArrayList<>();
 
     public BookTab(){
         this.add(BookPanel);
+
+        allBooksTable.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                var bookId = allBooksTable.getValueAt(allBooksTable.getSelectedRow(), 0).toString();
+                LoadRating(Integer.valueOf(bookId));
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         addBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,6 +139,45 @@ public class BookTab extends JPanel {
             JOptionPane.showMessageDialog(BookPanel, ex.getMessage());
         }
     }
+
+    public void LoadRating(int BookId){
+
+        QueryBookRatings query = new QueryBookRatings();
+        query.BookId = BookId;
+        try {
+            ratings = bookController.QueryBookRating(query);
+            DefaultTableModel tableModel = new DefaultTableModel();
+            if(ratings.size() > 0){
+                allRatingTable.setVisible(true);
+                tableModel.addColumn("Id");
+                tableModel.addColumn("Book Id");
+                tableModel.addColumn("Book Name");
+                tableModel.addColumn("Borrower Name");
+                tableModel.addColumn("Rating");
+                tableModel.addColumn("Review");
+                ratings.forEach((rating) -> {
+                    Object[] data = {rating.Id, rating.BookId, rating.BookName, rating.BorrowerName, rating.Rating, rating.Reviews};
+                    tableModel.addRow(data);
+                });
+                allRatingTable.setModel(tableModel);
+                allRatingTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+                allRatingTable.getColumnModel().getColumn(1).setPreferredWidth(220);
+                allRatingTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+                allRatingTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+                allRatingTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+                allRatingTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+            } else {
+            //    allRatingTable.setVisible(false);
+            }
+            if(ratings.size()>0){
+                LoadBooks();
+                JOptionPane.getFrameForComponent(allRatingTable);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void BorrowBook(){
         if (bookIDTextField.getText().equals("") || borrowerIDTextField.getText().equals("")) {

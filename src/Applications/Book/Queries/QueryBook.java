@@ -8,11 +8,9 @@ import java.util.ArrayList;
 
 public class QueryBook {
     private ApplicationDbContext _context = new ApplicationDbContext();
-    public String BookTitle;
-    public String PublicationYear;
-    public Boolean IsAvailable;
+    public int BookId;
     public ArrayList<Book> Handle() throws SQLException {
-        ArrayList<Book> books = _context.QueryBooks("true");
+        ArrayList<Book> books = _context.QueryBooks("Id = " + this.BookId);
 
         _context.Dispose();
 

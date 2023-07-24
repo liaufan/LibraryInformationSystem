@@ -2,6 +2,7 @@ package Infrastructure;
 
 import Models.*;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
@@ -239,6 +240,50 @@ public class ApplicationDbContext {
         }
     }
 
+    public void UpdateRating(ArrayList<Rating> ratings) throws SQLException {
+        Statement statement = connection.createStatement();
+        for(Rating rating: ratings){
+            String sql = "";
+            System.out.println("rating");
+            if(rating.Id == 0 ){
+                //Insert new row
+                sql += "INSERT INTO Ratings (Id, BookId, BorrowerName, BookName, Rating, Reviews, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + rating.BookId + "', ";
+                sql += "'" + rating.BorrowerName + "', ";
+                sql += "'" + rating.BookName + "', ";
+                sql += "'" + rating.Rating + "', ";
+                sql += "'" + rating.Reviews + "', ";
+                sql += "'" + rating.CreatedDate + "');";
+            }
+            System.out.println(sql);
+
+            statement.executeUpdate(sql);
+        }
+    }
+
+    public ArrayList<Rating> QueryBookRating(String whereClause) throws SQLException {
+        ArrayList<Rating> responses = new ArrayList<>();
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Ratings WHERE " + whereClause + ";");
+
+        while(resultSet.next()){
+            Rating rating = new Rating();
+
+            rating.Id = resultSet.getInt("Id");
+            rating.BookId = resultSet.getInt("BookId");
+            rating.BorrowerName = resultSet.getString("BorrowerName");
+            rating.BookName = resultSet.getString("BookName");
+            rating.Rating = resultSet.getInt("Rating");
+            rating.Reviews = resultSet.getString("Reviews");
+            rating.CreatedDate = resultSet.getDate("CreatedDate");
+
+            responses.add(rating);
+        }
+
+        return responses;
+    }
+
 
 
     public ArrayList<Transaction> QueryTransaction(String whereClause) throws SQLException {
@@ -260,6 +305,26 @@ public class ApplicationDbContext {
             transaction.CreatedDate = resultSet.getDate("CreatedDate");
 
             responses.add(transaction);
+        }
+
+        return responses;
+    }
+
+    public ArrayList<Borrower> QueryBorrower(String whereClause) throws SQLException {
+        ArrayList<Borrower> responses = new ArrayList<>();
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Borrowers WHERE " + whereClause + ";");
+
+        while(resultSet.next()){
+            Borrower borrower = new Borrower();
+
+            borrower.Id = resultSet.getInt("Id");
+            borrower.Name = resultSet.getString("Name");
+            borrower.Email = resultSet.getString("Email");
+            borrower.Phone = resultSet.getString("Phone");
+            borrower.CreatedDate = resultSet.getDate("CreatedDate");
+            responses.add(borrower);
         }
 
         return responses;

@@ -11,13 +11,19 @@ public class QueryTransaction {
     public Date StartDate;
     public Date EndDate;
 
-
-
+    public int TransactionId;
+    private ArrayList<Transaction> transactions = new ArrayList<>();
     private ApplicationDbContext _context = new ApplicationDbContext();
 
     public ArrayList<Transaction> Handle() throws SQLException {
         // Write the main command code here
-        ArrayList<Transaction> transactions = _context.QueryTransaction( " CreatedDate >= '" + this.StartDate +"'" + "&& CreatedDate <= '" + this.EndDate +"'");
+        if(this.TransactionId>0){
+            transactions = _context.QueryTransaction( "Id = " + this.TransactionId);
+        }
+        else{
+            transactions = _context.QueryTransaction( " CreatedDate >= '" + this.StartDate +"'" + "&& CreatedDate <= '" + this.EndDate);
+        }
+
 
         _context.UpdateTransaction(transactions);
         _context.Dispose();

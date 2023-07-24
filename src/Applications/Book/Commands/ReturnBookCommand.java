@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class ReturnBookCommand {
     public int TransactionId;
-    private int BookId;
     private ApplicationDbContext _context = new ApplicationDbContext();
     private Transaction transaction = new Transaction();
     public void Handle() throws Exception {

@@ -93,7 +93,8 @@ public class TransactionTab extends JPanel {
 
     public void QueryAllTransactions() {
         try{
-            allTransactions = transactionController.GetAllTransactions();
+            QueryAllTransactions query = new QueryAllTransactions();
+            allTransactions = transactionController.GetAllTransactions(query);
             DefaultTableModel tableModel = new DefaultTableModel(){
                 @Override
                 public boolean isCellEditable(int row, int column) {

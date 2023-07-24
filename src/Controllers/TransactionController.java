@@ -14,8 +14,8 @@ public class TransactionController {
     public void AddTransaction(AddTransactionCommand command) throws SQLException {
         command.Handle();
     }
-    public ArrayList<Transaction> GetAllTransactions() throws SQLException {
-        QueryAllTransactions query = new QueryAllTransactions();
+    public ArrayList<Transaction> GetAllTransactions(QueryAllTransactions query) throws SQLException {
+
         return query.Handle();
     }
     public ArrayList<Transaction> GetOverdueTransactions() throws SQLException {

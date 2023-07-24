@@ -1,5 +1,6 @@
 package UI;
 
+import Applications.Transaction.QueryAllTransactions;
 import Applications.Transaction.QueryTransaction;
 import Controllers.ReportController;
 import Controllers.TransactionController;
@@ -85,14 +86,10 @@ public class ReportTab extends JPanel {
     }
 
     public void GeneratesTransactionHistory(){
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH, 7);
-        QueryTransaction query = new QueryTransaction();
-        query.EndDate = new Date(c.getTime().getTime());
-        query.StartDate = new Date(System.currentTimeMillis());
 
+        QueryAllTransactions query = new QueryAllTransactions();
         try{
-            allTransactionsRange = transactionController.GetTransaction(query);
+            allTransactionsRange = transactionController.GetAllTransactions(query);
             DefaultTableModel tableModel = new DefaultTableModel(){
                 @Override
                 public boolean isCellEditable(int row, int column) {

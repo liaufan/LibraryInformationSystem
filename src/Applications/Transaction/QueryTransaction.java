@@ -21,7 +21,7 @@ public class QueryTransaction {
             transactions = _context.QueryTransaction( "Id = " + this.TransactionId);
         }
         else{
-            transactions = _context.QueryTransaction( " CreatedDate >= '" + this.StartDate +"'" + "&& CreatedDate <= '" + this.EndDate);
+            transactions = _context.QueryTransaction( " CreatedDate >= '" + this.StartDate +"'" + "&& CreatedDate <= '" + this.EndDate + "'");
         }
 
 

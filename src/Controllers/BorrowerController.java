@@ -13,7 +13,8 @@ public class BorrowerController {
         command.Handle();
     }
 
-    public ArrayList<Borrower> GetAllBorrowers(QueryAllBorrowers query) throws SQLException {
+    public ArrayList<Borrower> GetAllBorrowers() throws SQLException {
+        QueryAllBorrowers query = new QueryAllBorrowers();
         return query.Handle();
     }
 }

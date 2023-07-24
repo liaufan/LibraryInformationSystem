@@ -8,13 +8,12 @@ import java.util.ArrayList;
 
 public class ApplicationDbContext {
     private Connection connection;
+    private String url = "jdbc:mysql://localhost:3306/";
+    private String dbName = "LibraryDb";
+    private String username = "admin";
+    private String password = "mysql123";
 
     public ApplicationDbContext(){
-        String url = "jdbc:mysql://localhost:3306/";
-        String dbName = "LibraryDb";
-        String username = "admin";
-        String password = "mysql123";
-
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -160,11 +159,12 @@ public class ApplicationDbContext {
             String sql = "";
 
                 //Insert new row
-                sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, ExpectedReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
                 sql += "'" + transaction.BookId + "', ";
                 sql += "'" + transaction.BorrowerId + "', ";
                 sql += "'" + transaction.BorrowDate + "', ";
                 sql += "'" + transaction.ReturnDate + "', ";
+                sql += "'" + transaction.ExpectedReturnDate + "', ";
                 sql += transaction.IsReturned + ", ";
                 sql += "'" + transaction.CreatedDate + "');";
 
@@ -185,6 +185,7 @@ public class ApplicationDbContext {
             transaction.BorrowerId = resultSet.getInt("BorrowerId");
             transaction.BorrowDate = resultSet.getDate("BorrowDate");
             transaction.ReturnDate = resultSet.getDate("ReturnDate");
+            transaction.ExpectedReturnDate = resultSet.getDate("ExpectedReturnDate");
             transaction.IsReturned = resultSet.getBoolean("IsReturned");
             transaction.CreatedDate = resultSet.getDate("CreatedDate");
 

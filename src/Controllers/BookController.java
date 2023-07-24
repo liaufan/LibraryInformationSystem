@@ -17,7 +17,8 @@ public class BookController {
     public void BorrowBook(BorrowBookCommand command) throws Exception{
         command.Handle();
     }
-    public ArrayList<Book> GetAllBooks(QueryAllBooks query) throws SQLException {
+    public ArrayList<Book> GetAllBooks() throws SQLException {
+        QueryAllBooks query = new QueryAllBooks();
         return query.Handle();
     }
 }

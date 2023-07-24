@@ -78,8 +78,7 @@ public class BookTab extends JPanel {
 
     public void LoadBooks() {
         try{
-            QueryAllBooks query = new QueryAllBooks();
-            allBooks = bookController.GetAllBooks(query);
+            allBooks = bookController.GetAllBooks();
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allBooks.size() > 0){
                 allBooksTable.setVisible(true);

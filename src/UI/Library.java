@@ -1,14 +1,20 @@
 package UI;
 
+import Controllers.TransactionController;
+import Models.Transaction;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
+import java.util.Date;
 
-public class HomePage extends JFrame {
+public class Library extends JFrame {
     private JPanel HomePanel;
     private JTabbedPane MainTabbedPane;
+    private TransactionController transactionController = new TransactionController();
 
-    public HomePage() {
+    public Library() {
         setContentPane(HomePanel);
         setTitle("Library Information System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,6 +39,16 @@ public class HomePage extends JFrame {
             }
         });
 
+        ShowOverdueNotification();
+    }
 
+    private void ShowOverdueNotification() {
+        try{
+            ArrayList<Transaction> overdueTransactions = transactionController.GetOverdueTransactions();
+            if (overdueTransactions.size() > 0) {
+                JOptionPane.showMessageDialog(HomePanel, "There are " + overdueTransactions.size() + " overdue borrowing transactions as of " + new Date(System.currentTimeMillis()));
+            }
+
+        } catch (Exception e){}
     }
 }

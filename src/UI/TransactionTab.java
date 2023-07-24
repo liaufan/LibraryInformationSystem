@@ -57,7 +57,7 @@ public class TransactionTab extends JPanel {
                 transactionTable.setVisible(false);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(TransactionPanel, ex);
+            JOptionPane.showMessageDialog(TransactionPanel, ex.getMessage());
         }
     }
 }

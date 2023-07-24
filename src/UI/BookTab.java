@@ -23,7 +23,6 @@ public class BookTab extends JPanel {
     private JTextField titleTextField;
     private JTextField authorTextField;
     private JTextField publicationYearTextField;
-    private JCheckBox isAvailableCheckBox;
     private JButton addBookButton;
     private JTable allBooksTable;
     private JTextField bookIDTextField;
@@ -62,16 +61,15 @@ public class BookTab extends JPanel {
                 command.Title = titleTextField.getText();
                 command.Author = authorTextField.getText();
                 command.PublicationYear = publicationYearTextField.getText();
-                command.IsAvailable = isAvailableCheckBox.isSelected();
+                command.IsAvailable = true;
                 bookController.AddBook(command);
                 JOptionPane.showMessageDialog(BookPanel, "New book added.");
                 titleTextField.setText("");
                 authorTextField.setText("");
                 publicationYearTextField.setText("");
-                isAvailableCheckBox.setSelected(false);
                 LoadBooks();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(BookPanel, ex);
+                JOptionPane.showMessageDialog(BookPanel, ex.getMessage());
             }
         }
     }
@@ -103,7 +101,7 @@ public class BookTab extends JPanel {
                 allBooksTable.setVisible(false);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(BookPanel, ex);
+            JOptionPane.showMessageDialog(BookPanel, ex.getMessage());
         }
     }
 
@@ -125,7 +123,7 @@ public class BookTab extends JPanel {
 
                 LoadBooks();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(BookPanel, ex);
+                JOptionPane.showMessageDialog(BookPanel, ex.getMessage());
             }
         }
     }

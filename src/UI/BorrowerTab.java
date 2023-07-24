@@ -1,7 +1,6 @@
 package UI;
 
 import Applications.Borrower.AddBorrowerCommand;
-import Applications.Borrower.QueryAllBorrowers;
 import Controllers.BorrowerController;
 import Models.Borrower;
 
@@ -13,11 +12,12 @@ import java.util.ArrayList;
 
 public class BorrowerTab extends JPanel {
     private JPanel BorrowerPanel;
-    private JTable allBorrowersTable;
     private JTextField nameTextField;
     private JButton addBorrowerButton;
     private JTextField emailTextField;
     private JTextField phoneTextField;
+    private JTable allBorrowersTable;
+
     private BorrowerController borrowerController = new BorrowerController();
     private ArrayList<Borrower> allBorrowers = new ArrayList();
 
@@ -51,7 +51,7 @@ public class BorrowerTab extends JPanel {
 
                 LoadBorrowers();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(BorrowerPanel, ex);
+                JOptionPane.showMessageDialog(BorrowerPanel, ex.getMessage());
             }
         }
     }
@@ -81,7 +81,7 @@ public class BorrowerTab extends JPanel {
                 allBorrowersTable.setVisible(false);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(BorrowerPanel, ex);
+            JOptionPane.showMessageDialog(BorrowerPanel, ex.getMessage());
         }
     }
 }

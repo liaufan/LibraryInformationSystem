@@ -42,34 +42,6 @@ public class BookTab extends JPanel {
     public BookTab(){
         this.add(BookPanel);
 
-        allBooksTable.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                var bookId = allBooksTable.getValueAt(allBooksTable.getSelectedRow(), 0).toString();
-                System.out.println(bookId);
-                LoadRating(Integer.valueOf(bookId));
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
         addBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,7 +62,7 @@ public class BookTab extends JPanel {
                 try {
                     var transactionID = allBooksTable.getValueAt(allBooksTable.getSelectedRow(), 0).toString();
 
-                    LoadRating(Integer.valueOf(transactionID));
+                    LoadRating(Integer.parseInt(transactionID));
 
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(BookPanel, ex);
@@ -187,7 +159,7 @@ public class BookTab extends JPanel {
         query.BookId = BookId;
 
         try {
-            int avgRating = 0;
+            double avgRating = 0;
             JTable allRatingTable = new JTable();
             ratings = bookController.QueryBookRating(query);
             DefaultTableModel tableModel = new DefaultTableModel();
@@ -213,17 +185,14 @@ public class BookTab extends JPanel {
                 allRatingTable.getColumnModel().getColumn(3).setPreferredWidth(80);
                 allRatingTable.getColumnModel().getColumn(4).setPreferredWidth(50);
                 allRatingTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+                JComponent[] dialog = new JComponent[]{
+                        new JLabel(ratings.get(0).BookName),
+                        new JLabel("Average Ratings: " + String.valueOf(Math.round(avgRating * 100) / 100)),
+                        new JScrollPane(allRatingTable)
+                };
+                JOptionPane.showMessageDialog(BookPanel ,dialog , "Book Recommendations", JOptionPane.PLAIN_MESSAGE);
             } else {
                 allRatingTable.setVisible(false);
-            }
-            JComponent[] dialog = new JComponent[]{
-                    new JLabel(ratings.get(0).BookName),
-                    new JLabel(String.valueOf(avgRating)),
-                    new JScrollPane(allRatingTable)
-            };
-            if(ratings.size()>0){
-                JOptionPane.showMessageDialog(BookPanel ,dialog , "Book Recommendations", JOptionPane.PLAIN_MESSAGE);
-            }else{
                 JOptionPane.showMessageDialog(BookPanel, "No existing Ratings for this book.");
             }
         } catch (SQLException e) {

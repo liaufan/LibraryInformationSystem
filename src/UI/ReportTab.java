@@ -50,7 +50,13 @@ public class ReportTab extends JPanel {
     public void QueryAvailableBooks(){
         try{
             allAvailableBooks = reportController.GetAvailableBooks();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allAvailableBooks.size() > 0){
                 displayTable.setVisible(true);
                 tableModel.addColumn("Book Id");
@@ -87,7 +93,13 @@ public class ReportTab extends JPanel {
 
         try{
             allTransactionsRange = transactionController.GetTransaction(query);
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allTransactionsRange.size() > 0){
                 displayTable.setVisible(true);
                 tableModel.addColumn("Id");
@@ -120,7 +132,13 @@ public class ReportTab extends JPanel {
     public void queryBorrowedBooks(){
         try{
             allAvailableBooks = reportController.GetBorrowedBook();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allAvailableBooks.size() > 0){
                 displayTable.setVisible(true);
                 tableModel.addColumn("Book Id");

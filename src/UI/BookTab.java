@@ -150,7 +150,13 @@ public class BookTab extends JPanel {
     public void LoadBooks() {
         try{
             allBooks = bookController.GetAllBooks();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allBooks.size() > 0){
                 allBooksTable.setVisible(true);
                 tableModel.addColumn("Book Id");

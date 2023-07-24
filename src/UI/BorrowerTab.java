@@ -59,7 +59,13 @@ public class BorrowerTab extends JPanel {
     public void LoadBorrowers() {
         try{
             allBorrowers = borrowerController.GetAllBorrowers();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allBorrowers.size() > 0){
                 allBorrowersTable.setVisible(true);
                 tableModel.addColumn("Borrower Id");

@@ -63,7 +63,13 @@ public class TransactionTab extends JPanel {
     public void QueryAllTransactions() {
         try{
             allTransactions = transactionController.GetAllTransactions();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allTransactions.size() > 0){
                 transactionTable.setVisible(true);
                 tableModel.addColumn("Id");

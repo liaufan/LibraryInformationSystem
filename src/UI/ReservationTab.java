@@ -66,7 +66,13 @@ public class ReservationTab extends JPanel {
     public void LoadReservations() {
         try{
             allReservations = reservationController.GetAllReservations();
-            DefaultTableModel tableModel = new DefaultTableModel();
+            DefaultTableModel tableModel = new DefaultTableModel(){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //all cells false
+                    return false;
+                }
+            };
             if(allReservations.size() > 0){
                 allReservationsTable.setVisible(true);
                 tableModel.addColumn("Book Name");

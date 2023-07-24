@@ -58,8 +58,7 @@ public class BorrowerTab extends JPanel {
 
     public void LoadBorrowers() {
         try{
-            QueryAllBorrowers query = new QueryAllBorrowers();
-            allBorrowers = borrowerController.GetAllBorrowers(query);
+            allBorrowers = borrowerController.GetAllBorrowers();
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allBorrowers.size() > 0){
                 allBorrowersTable.setVisible(true);

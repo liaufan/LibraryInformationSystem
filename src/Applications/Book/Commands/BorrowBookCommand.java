@@ -5,8 +5,8 @@ import Models.Book;
 import Models.Transaction;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class BorrowBookCommand {
     public int BookId;
@@ -32,6 +32,11 @@ public class BorrowBookCommand {
         transaction.BorrowerId = this.BorrowerId;
         transaction.BorrowDate = new Date(System.currentTimeMillis());
         transaction.ReturnDate = new Date(1,0,1);
+
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH, 14);
+        transaction.ExpectedReturnDate =  new Date( c.getTime().getTime());
+
         transaction.IsReturned = false;
         transaction.CreatedDate = new Date(System.currentTimeMillis());
 

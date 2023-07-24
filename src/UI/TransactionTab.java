@@ -54,9 +54,8 @@ public class TransactionTab extends JPanel {
     }
 
     public void QueryAllTransactions() {
-        QueryAllTransactions query = new QueryAllTransactions();
         try{
-            allTransactions = transactionController.GetAllTransactions(query);
+            allTransactions = transactionController.GetAllTransactions();
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allTransactions.size() > 0){
                 transactionTable.setVisible(true);

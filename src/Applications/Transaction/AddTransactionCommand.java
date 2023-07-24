@@ -30,6 +30,7 @@ public class AddTransactionCommand {
 
         transactions.add(transaction);
         _context.AddTransaction(transactions);
+        _context.Dispose();
     }
 
 }

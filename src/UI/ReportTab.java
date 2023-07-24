@@ -1,17 +1,13 @@
 package UI;
 
-import Applications.Report.GetAvailableBooksQuery;
-import Applications.Transaction.QueryAllTransactions;
+import Applications.Report.QueryAvailableBooks;
 import Controllers.ReportController;
-import Controllers.TransactionController;
 import Models.Book;
-import Models.Transaction;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReportTab extends JPanel {
@@ -33,7 +29,7 @@ public class ReportTab extends JPanel {
         });
     }
     public void QueryAvailableBooks(){
-        GetAvailableBooksQuery query = new GetAvailableBooksQuery();
+        QueryAvailableBooks query = new QueryAvailableBooks();
         try{
             allAvailableBooks = reportController.GetAvailableBook(query);
             DefaultTableModel tableModel = new DefaultTableModel();

@@ -1,9 +1,9 @@
 package UI;
 
-import Applications.Book.AddBookCommand;
-import Applications.Book.GetAllBooksQuery;
-import Applications.Book.QueryBook;
-import Applications.Report.GetAvailableBooksQuery;
+import Applications.Book.Commands.AddBookCommand;
+import Applications.Book.Commands.BorrowBookCommand;
+import Applications.Book.Queries.QueryAllBooks;
+import Applications.Book.Queries.QueryBook;
 import Applications.Transaction.AddTransactionCommand;
 import Controllers.BookController;
 import Controllers.TransactionController;
@@ -15,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -27,6 +26,9 @@ public class BookTab extends JPanel {
     private JCheckBox isAvailableCheckBox;
     private JButton addBookButton;
     private JTable allBooksTable;
+    private JTextField bookIDTextField;
+    private JTextField borrowerIDTextField;
+    private JButton borrowBookButton;
     private BookController bookController = new BookController();
     private TransactionController transactionController = new TransactionController();
     private ArrayList<Book> allBooks = new ArrayList();
@@ -37,6 +39,13 @@ public class BookTab extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddBook();
+            }
+        });
+
+        borrowBookButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BorrowBook();
             }
         });
 
@@ -55,7 +64,6 @@ public class BookTab extends JPanel {
                 command.PublicationYear = publicationYearTextField.getText();
                 command.IsAvailable = isAvailableCheckBox.isSelected();
                 bookController.AddBook(command);
-                AddTransaction(command.Title, command.PublicationYear, command.IsAvailable);
                 JOptionPane.showMessageDialog(BookPanel, "New book added.");
                 titleTextField.setText("");
                 authorTextField.setText("");
@@ -70,7 +78,7 @@ public class BookTab extends JPanel {
 
     public void LoadBooks() {
         try{
-            GetAllBooksQuery query = new GetAllBooksQuery();
+            QueryAllBooks query = new QueryAllBooks();
             allBooks = bookController.GetAllBooks(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allBooks.size() > 0){
@@ -100,33 +108,27 @@ public class BookTab extends JPanel {
         }
     }
 
-    public void AddTransaction(String BookTitle, String PublicationYear, Boolean IsAvailable){
-        QueryBook query = new QueryBook();
-        query.BookTitle= BookTitle;
-        query.PublicationYear = PublicationYear;
-        query.IsAvailable= IsAvailable;
+    public void BorrowBook(){
+        if (bookIDTextField.getText().equals("") || borrowerIDTextField.getText().equals("")) {
+            JOptionPane.showMessageDialog(BookPanel, "Please input all the fields.");
+        } else {
+            try {
+                int bookId = Integer.parseInt(bookIDTextField.getText());
+                int borrowerId = Integer.parseInt(borrowerIDTextField.getText());
+                BorrowBookCommand command = new BorrowBookCommand();
+                command.BookId = bookId;
+                command.BorrowerId = borrowerId;
 
-        try {
-            allBooks = bookController.QueryBooks(query);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+                bookController.BorrowBook(command);
+                JOptionPane.showMessageDialog(BookPanel, "Book borrowed.");
+                bookIDTextField.setText("");
+                borrowerIDTextField.setText("");
+
+                LoadBooks();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(BookPanel, ex);
+            }
         }
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.MONTH, 1);
-        long returnDate = c.getTimeInMillis();
-        AddTransactionCommand command = new AddTransactionCommand();
-        command.BookId = allBooks.get(0).Id;
-        command.BorrowDate = new Date(System.currentTimeMillis());
-        command.BorrowerId = 0;
-        command.ReturnDate = new Date(returnDate);
-        command.IsReturned = false;
-
-        try {
-            transactionController.AddTransaction(command);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
 

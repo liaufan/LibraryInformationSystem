@@ -1,15 +1,13 @@
 package Controllers;
 
-import Applications.Book.GetAllBooksQuery;
-import Applications.Book.QueryBook;
-import Applications.Report.GetAvailableBooksQuery;
+import Applications.Report.QueryAvailableBooks;
 import Models.Book;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReportController {
-    public ArrayList<Book> GetAvailableBook(GetAvailableBooksQuery query) throws SQLException {
+    public ArrayList<Book> GetAvailableBook(QueryAvailableBooks query) throws SQLException {
         return query.Handle();
     }
 }

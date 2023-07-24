@@ -1,9 +1,9 @@
 package Controllers;
 
-import Applications.Book.AddBookCommand;
-import Applications.Book.GetAllBooksQuery;
-import Applications.Book.QueryBook;
-import Applications.Report.GetAvailableBooksQuery;
+import Applications.Book.Commands.AddBookCommand;
+import Applications.Book.Commands.BorrowBookCommand;
+import Applications.Book.Queries.QueryAllBooks;
+import Applications.Book.Queries.QueryBook;
 import Models.Book;
 
 import java.sql.SQLException;
@@ -13,7 +13,11 @@ public class BookController {
     public void AddBook(AddBookCommand command) throws SQLException{
         command.Handle();
     }
-    public ArrayList<Book> GetAllBooks(GetAllBooksQuery query) throws SQLException {
+
+    public void BorrowBook(BorrowBookCommand command) throws Exception{
+        command.Handle();
+    }
+    public ArrayList<Book> GetAllBooks(QueryAllBooks query) throws SQLException {
         return query.Handle();
     }
     public ArrayList<Book> QueryBooks(QueryBook query) throws SQLException {

@@ -29,5 +29,6 @@ public class QueryTransaction {
 
         transactions.add(transaction);
         _context.AddTransaction(transactions);
+        _context.Dispose();
     }
 }

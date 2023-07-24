@@ -1,7 +1,5 @@
 package UI;
 
-import Applications.Book.GetAllBooksQuery;
-import Applications.Report.GetAvailableBooksQuery;
 import Applications.Transaction.QueryAllTransactions;
 import Controllers.TransactionController;
 import Models.Transaction;
@@ -10,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TransactionTab extends JPanel {

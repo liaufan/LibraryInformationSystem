@@ -1,8 +1,9 @@
 package Controllers;
 
-import Applications.Book.GetAllBooksQuery;
+
 import Applications.Borrower.AddBorrowerCommand;
-import Models.Book;
+import Applications.Borrower.QueryAllBorrowers;
+import Models.Borrower;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class BorrowerController {
         command.Handle();
     }
 
-    public ArrayList<Book> GetAllBorrowers(GetAllBooksQuery query) throws SQLException {
+    public ArrayList<Borrower> GetAllBorrowers(QueryAllBorrowers query) throws SQLException {
         return query.Handle();
     }
 }

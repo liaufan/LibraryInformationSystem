@@ -1,4 +1,4 @@
-package Applications.Book;
+package Applications.Book.Commands;
 
 import Infrastructure.ApplicationDbContext;
 import Models.Book;

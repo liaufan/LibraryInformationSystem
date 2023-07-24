@@ -180,6 +180,7 @@ public class BookTab extends JPanel {
         QueryBookRatings query = new QueryBookRatings();
         query.BookId = BookId;
         try {
+
             JTable allRatingTable = new JTable();
             ratings = bookController.QueryBookRating(query);
             DefaultTableModel tableModel = new DefaultTableModel();
@@ -207,11 +208,12 @@ public class BookTab extends JPanel {
             }
             JComponent[] dialog = new JComponent[]{
                     new JLabel("BOOK NAME"),
-                    allRatingTable
+                    new JScrollPane(allRatingTable)
             };
             if(ratings.size()>0){
-                LoadBooks();
-                JOptionPane.getFrameForComponent(allRatingTable);
+                JOptionPane.showMessageDialog(BookPanel ,dialog , "Book Recommendations", JOptionPane.PLAIN_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(BookPanel, "No existing Ratings for this book.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

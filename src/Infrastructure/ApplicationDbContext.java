@@ -282,6 +282,21 @@ public class ApplicationDbContext {
             } //Skip if table already created
 
             // TODO: pump initialize data for all tables
+            var books = QueryBooks("true");
+            if(books.size() == 0){
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Little Prince', 'Antoine de Saint-Exupery', '1943', true, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'Harry Potter and the Philosophers Stone', 'J. K. Rowling', '1997', true, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'Dream of the Red Chamber', 'Cao Xueqin', '1791', true, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Hobbit', 'J. R. R. Tolkien', '1937', true, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Hunger Games', 'Suzanne Collins', '2008', true, '2023-07-24')");
+            }
+
+            var borrowers = QueryBorrowers("true");
+            if(borrowers.size() == 0){
+                statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'John', 'john@gmail.com', '0123456789', '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'Cindy', 'cindy@gmail.com', '019882738', '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'Albert', 'albert@gmail.com', '0187239878', '2023-07-24')");
+            }
         }catch(SQLException ex){
             System.out.println(ex);
         }

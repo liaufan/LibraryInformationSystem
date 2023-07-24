@@ -74,7 +74,7 @@ public class ReportTab extends JPanel {
                 allBooksTable.setVisible(false);
             }
         } catch (Exception ex){
-            JOptionPane.showMessageDialog(ReportPanel, ex);
+            JOptionPane.showMessageDialog(ReportPanel, ex.getMessage());
         }
     }
 

@@ -6,6 +6,7 @@ import Models.Transaction;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -46,7 +47,8 @@ public class Library extends JFrame {
         try{
             ArrayList<Transaction> overdueTransactions = transactionController.GetOverdueTransactions();
             if (overdueTransactions.size() > 0) {
-                JOptionPane.showMessageDialog(HomePanel, "There are " + overdueTransactions.size() + " overdue borrowing transactions as of " + new Date(System.currentTimeMillis()));
+                var today = new SimpleDateFormat("EE, dd MMM yyyy").format(new Date(System.currentTimeMillis()));
+                JOptionPane.showMessageDialog(HomePanel, "There is(are) " + overdueTransactions.size() + " overdue borrowing transactions as of " + today);
             }
 
         } catch (Exception e){}

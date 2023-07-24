@@ -2,6 +2,7 @@ package Applications.Book.Commands;
 
 import Infrastructure.ApplicationDbContext;
 import Models.Book;
+import Models.Borrower;
 import Models.Transaction;
 
 import java.sql.Date;
@@ -13,6 +14,10 @@ public class BorrowBookCommand {
     public int BorrowerId;
     private ApplicationDbContext _context = new ApplicationDbContext();
     public void Handle() throws Exception {
+        ArrayList<Borrower> borrowers = _context.QueryBorrowers("Id = " + this.BorrowerId);
+        if(borrowers.size() == 0){
+            throw new Exception("Borrower does not exist.");
+        }
         ArrayList<Book> books = _context.QueryBooks("Id = " + this.BookId);
         if(books.size() == 0){
             throw new Exception("Book not found.");

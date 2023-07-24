@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class QueryOverdueTransactions {
     private ApplicationDbContext _context = new ApplicationDbContext();
     public ArrayList<Transaction> Handle() throws SQLException {
-        ArrayList<Transaction> transactions = _context.QueryTransaction("ExpectedReturnDate > '" + new Date(System.currentTimeMillis()) + "' && IsReturned = false");
+        ArrayList<Transaction> transactions = _context.QueryTransaction("ExpectedReturnDate < '" + new Date(System.currentTimeMillis()) + "' && IsReturned = false");
         _context.Dispose();
 
         return transactions;

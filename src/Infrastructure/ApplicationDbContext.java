@@ -152,6 +152,61 @@ public class ApplicationDbContext {
         }
     }
 
+    public ArrayList<Reservation> QueryReservations(String whereClause) throws SQLException {
+        ArrayList<Reservation> responses = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Reservations WHERE " + whereClause + ";");
+
+        while(resultSet.next()){
+            Reservation reservation = new Reservation();
+
+            reservation.Id = resultSet.getInt("Id");
+            reservation.BookId = resultSet.getInt("BookId");
+            reservation.BookName = resultSet.getString("BookName");
+            reservation.BorrowerId = resultSet.getInt("BorrowerId");
+            reservation.BorrowerName = resultSet.getString("BorrowerName");
+            reservation.BorrowDate = resultSet.getDate("BorrowDate");
+            reservation.ReturnDate = resultSet.getDate("ReturnDate");
+            reservation.CreatedDate = resultSet.getDate("CreatedDate");
+
+            responses.add(reservation);
+        }
+
+        return responses;
+    }
+
+    public void UpdateReservations(ArrayList<Reservation> reservations) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        for(Reservation reservation: reservations){
+            String sql = "";
+            if(reservation.Id == 0 ){
+                //Insert new row
+                sql += "INSERT INTO Reservations (Id, BookId, BookName, BorrowerId, BorrowerName, BorrowDate, ReturnDate, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + reservation.BookId + "', ";
+                sql += "'" + reservation.BookName + "', ";
+                sql += "'" + reservation.BorrowerId + "', ";
+                sql += "'" + reservation.BorrowerName + "', ";
+                sql += "'" + reservation.BorrowDate + "', ";
+                sql += "'" + reservation.ReturnDate + "', ";
+                sql += "'" + reservation.CreatedDate + "');";
+            } else {
+                //Update existing row by Id
+                sql += "UPDATE Reservations SET ";
+                sql += "BookId = " + "'" + reservation.BookId + "', ";
+                sql += "BookName = " + "'" + reservation.BookName + "', ";
+                sql += "BorrowerId = " + "'" + reservation.BorrowerId + "', ";
+                sql += "BorrowerName = " + "'" + reservation.BorrowerName + "', ";
+                sql += "BorrowDate = " + "'" + reservation.BorrowDate + "', ";
+                sql += "ReturnDate = " + reservation.ReturnDate + ", ";
+                sql += "CreatedDate = " + "'" + reservation.CreatedDate + "' ";
+                sql += "WHERE Id = " + reservation.Id + ";";
+            }
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+        }
+    }
+
     public void UpdateTransaction(ArrayList<Transaction> transactions) throws SQLException {
         Statement statement = connection.createStatement();
         for(Transaction transaction: transactions){
@@ -296,6 +351,12 @@ public class ApplicationDbContext {
                 statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'John', 'john@gmail.com', '0123456789', '2023-07-24')");
                 statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'Cindy', 'cindy@gmail.com', '019882738', '2023-07-24')");
                 statement.executeUpdate("INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, 'Albert', 'albert@gmail.com', '0187239878', '2023-07-24')");
+            }
+
+            var reservations = QueryReservations("true");
+            if(reservations.size() == 0){
+                statement.executeUpdate("INSERT INTO Reservations (Id, BookId, BookName, BorrowerId, BorrowerName, BorrowDate, ReturnDate, CreatedDate) VALUES ( DEFAULT, 1, 'The Little Prince', 1, 'John', '2023-07-20','2023-07-31','2023-07-24')");
+                statement.executeUpdate("INSERT INTO Reservations (Id, BookId, BookName, BorrowerId, BorrowerName, BorrowDate, ReturnDate, CreatedDate) VALUES ( DEFAULT, 2, 'Harry Potter and the Philosophers Stone', 2, 'Cindy', '2023-07-30','2023-08-15','2023-07-24')");
             }
         }catch(SQLException ex){
             System.out.println(ex);

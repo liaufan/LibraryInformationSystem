@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class ReportTab extends JPanel {
     private JPanel ReportPanel;
     private JButton viewBooksBtn;
-    private JTable allBooksTable;
+    private JTable displayTable;
     private JButton viewTransactionRange;
     private JButton borrowedBookBtn;
     private ArrayList<Book> allAvailableBooks = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ReportTab extends JPanel {
             allAvailableBooks = reportController.GetAvailableBooks();
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allAvailableBooks.size() > 0){
-                allBooksTable.setVisible(true);
+                displayTable.setVisible(true);
                 tableModel.addColumn("Book Id");
                 tableModel.addColumn("Book Title");
                 tableModel.addColumn("Author");
@@ -63,15 +63,15 @@ public class ReportTab extends JPanel {
                     Object[] data = {book.Id, book.Title, book.Author, book.PublicationYear, book.IsAvailable, book.CreatedDate};
                     tableModel.addRow(data);
                 });
-                allBooksTable.setModel(tableModel);
-                allBooksTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                allBooksTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                allBooksTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-                allBooksTable.getColumnModel().getColumn(4).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+                displayTable.setModel(tableModel);
+                displayTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+                displayTable.getColumnModel().getColumn(1).setPreferredWidth(220);
+                displayTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+                displayTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+                displayTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+                displayTable.getColumnModel().getColumn(5).setPreferredWidth(100);
             } else {
-                allBooksTable.setVisible(false);
+                displayTable.setVisible(false);
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(ReportPanel, ex.getMessage());
@@ -82,14 +82,14 @@ public class ReportTab extends JPanel {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 7);
         QueryTransaction query = new QueryTransaction();
-        query.EndDate = new Date( c.getTime().getTime());
+        query.EndDate = new Date(c.getTime().getTime());
         query.StartDate = new Date(System.currentTimeMillis());
 
         try{
             allTransactionsRange = transactionController.GetTransaction(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allTransactionsRange.size() > 0){
-                allBooksTable.setVisible(true);
+                displayTable.setVisible(true);
                 tableModel.addColumn("Id");
                 tableModel.addColumn("Book ID");
                 tableModel.addColumn("Borrower ID");
@@ -101,16 +101,16 @@ public class ReportTab extends JPanel {
                     Object[] data = {transaction.Id, transaction.BookId, transaction.BorrowerId, transaction.BorrowDate, transaction.ReturnDate,transaction.IsReturned ,transaction.CreatedDate};
                     tableModel.addRow(data);
                 });
-                allBooksTable.setModel(tableModel);
-                allBooksTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                allBooksTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                allBooksTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-                allBooksTable.getColumnModel().getColumn(4).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-                allBooksTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+                displayTable.setModel(tableModel);
+                displayTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+                displayTable.getColumnModel().getColumn(1).setPreferredWidth(60);
+                displayTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+                displayTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+                displayTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+                displayTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+                displayTable.getColumnModel().getColumn(6).setPreferredWidth(100);
             } else {
-                allBooksTable.setVisible(false);
+                displayTable.setVisible(false);
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(ReportPanel, ex);
@@ -122,7 +122,7 @@ public class ReportTab extends JPanel {
             allAvailableBooks = reportController.GetBorrowedBook();
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allAvailableBooks.size() > 0){
-                allBooksTable.setVisible(true);
+                displayTable.setVisible(true);
                 tableModel.addColumn("Book Id");
                 tableModel.addColumn("Book Title");
                 tableModel.addColumn("Author");
@@ -133,15 +133,15 @@ public class ReportTab extends JPanel {
                     Object[] data = {book.Id, book.Title, book.Author, book.PublicationYear, book.IsAvailable, book.CreatedDate};
                     tableModel.addRow(data);
                 });
-                allBooksTable.setModel(tableModel);
-                allBooksTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                allBooksTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                allBooksTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-                allBooksTable.getColumnModel().getColumn(4).setPreferredWidth(50);
-                allBooksTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+                displayTable.setModel(tableModel);
+                displayTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+                displayTable.getColumnModel().getColumn(1).setPreferredWidth(220);
+                displayTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+                displayTable.getColumnModel().getColumn(3).setPreferredWidth(80);
+                displayTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+                displayTable.getColumnModel().getColumn(5).setPreferredWidth(100);
             } else {
-                allBooksTable.setVisible(false);
+                displayTable.setVisible(false);
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(ReportPanel, ex);

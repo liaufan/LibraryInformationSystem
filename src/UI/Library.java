@@ -27,16 +27,21 @@ public class Library extends JFrame {
         BorrowerTab borrowerTab = new BorrowerTab();
         TransactionTab transactionTab = new TransactionTab();
         ReportTab reportTab = new ReportTab();
+        ReservationTab reservationTab = new ReservationTab();
 
         MainTabbedPane.addTab("Books", bookTab);
         MainTabbedPane.addTab("Borrowers", borrowerTab);
         MainTabbedPane.addTab("Transactions", transactionTab);
+        MainTabbedPane.addTab("Reservations", reservationTab);
         MainTabbedPane.addTab("Reports", reportTab);
 
         MainTabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
+                bookTab.LoadBooks();
+                borrowerTab.LoadBorrowers();
                 transactionTab.QueryAllTransactions();
+                reservationTab.LoadReservations();
             }
         });
 

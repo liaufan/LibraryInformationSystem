@@ -3,9 +3,11 @@ package Applications.Book.Commands;
 import Infrastructure.ApplicationDbContext;
 import Models.Book;
 import Models.Borrower;
+import Models.Reservation;
 import Models.Transaction;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -27,6 +29,16 @@ public class BorrowBookCommand {
         if(!book.IsAvailable){
             throw new Exception("Book is not available.");
         }
+
+        var format = new SimpleDateFormat("yyyy-MM-dd");
+        var today = format.format(new Date(System.currentTimeMillis()));
+        ArrayList<Reservation> reservations = _context.QueryReservations("BookId = "+this.BookId+" && '"+today+"' > BorrowDate && '" + today + "' < ReturnDate");
+
+        if(reservations.size() > 0 && this.BorrowerId !=  reservations.get(0).BorrowerId) {
+            throw new Exception("The book has been reserved by "+ reservations.get(0).BorrowerName + ".");
+        }
+
+
         book.IsAvailable = false;
         books.add(book);
         _context.UpdateBooks(books);

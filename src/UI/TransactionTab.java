@@ -78,11 +78,11 @@ public class TransactionTab extends JPanel {
                     tableModel.addRow(data);
                 });
                 transactionTable.setModel(tableModel);
-                transactionTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                transactionTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                transactionTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                transactionTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-                transactionTable.getColumnModel().getColumn(4).setPreferredWidth(50);
+                transactionTable.getColumnModel().getColumn(0).setPreferredWidth(60);
+                transactionTable.getColumnModel().getColumn(1).setPreferredWidth(60);
+                transactionTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+                transactionTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+                transactionTable.getColumnModel().getColumn(4).setPreferredWidth(100);
                 transactionTable.getColumnModel().getColumn(5).setPreferredWidth(100);
                 transactionTable.getColumnModel().getColumn(6).setPreferredWidth(100);
             } else {

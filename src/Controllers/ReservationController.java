@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReservationController {
-    public void AddReservation(AddReservationCommand command) throws SQLException {
+    public void AddReservation(AddReservationCommand command) throws Exception {
         command.Handle();
     }
 

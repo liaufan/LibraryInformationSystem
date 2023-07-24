@@ -23,6 +23,12 @@ public class ReturnBookCommand {
         else{
             transaction = transactions.get(0);
             transaction.IsReturned = true;
+
+            ArrayList<Book> books = _context.QueryBooks("Id = " + transaction.BookId);
+            if(books.size() > 0){
+                books.get(0).IsAvailable = true;
+            }
+
         }
         ArrayList<Book> books = _context.QueryBooks("Id = " + transaction.BookId);
 

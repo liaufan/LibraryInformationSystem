@@ -107,12 +107,11 @@ public class ApplicationDbContext {
         }
     }
 
-    public void AddTransaction(ArrayList<Transaction> transactions) throws SQLException {
+    public void UpdateTransaction(ArrayList<Transaction> transactions) throws SQLException {
         Statement statement = connection.createStatement();
-
         for(Transaction transaction: transactions){
             String sql = "";
-
+            if(transaction.Id == 0 ){
                 //Insert new row
                 sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
                 sql += "'" + transaction.BookId + "', ";
@@ -121,14 +120,27 @@ public class ApplicationDbContext {
                 sql += "'" + transaction.ReturnDate + "', ";
                 sql += transaction.IsReturned + ", ";
                 sql += "'" + transaction.CreatedDate + "');";
+            } else {
+                //Update existing row by Id
+                sql += "UPDATE Books SET";
+                sql += "'" + transaction.BookId + "', ";
+                sql += "'" + transaction.BorrowerId + "', ";
+                sql += "'" + transaction.BorrowDate + "', ";
+                sql += "'" + transaction.ReturnDate + "', ";
+                sql += transaction.IsReturned + ", ";
+                sql += "'" + transaction.CreatedDate + "');";
+            }
 
             statement.executeUpdate(sql);
         }
     }
 
+
+
     public ArrayList<Transaction> QueryTransaction(String whereClause) throws SQLException {
         ArrayList<Transaction> responses = new ArrayList<>();
         Statement statement = connection.createStatement();
+        System.out.println("SELECT * FROM Transactions WHERE " + whereClause + ";");
         ResultSet resultSet = statement.executeQuery("SELECT * FROM Transactions WHERE " + whereClause + ";");
 
         while(resultSet.next()){

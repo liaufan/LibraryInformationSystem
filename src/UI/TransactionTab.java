@@ -1,6 +1,7 @@
 package UI;
 
 import Applications.Book.GetAllBooksQuery;
+import Applications.Book.ReturnBookCommand;
 import Applications.Report.GetAvailableBooksQuery;
 import Applications.Transaction.QueryAllTransactions;
 import Controllers.TransactionController;
@@ -10,6 +11,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,9 +25,34 @@ public class TransactionTab extends JPanel {
 
     public TransactionTab() {
         this.add(TransactionPanel);
-        button1.addActionListener(new ActionListener() {
+        transactionTable.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
+
+                var res = JOptionPane.showConfirmDialog(TransactionPanel, "Return Book?");
+                if(res==0){
+                    var transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
+                    ReturnBook(Integer.valueOf(transactionID));
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
 
             }
         });
@@ -62,6 +90,15 @@ public class TransactionTab extends JPanel {
             }
         } catch (Exception ex){
             JOptionPane.showMessageDialog(TransactionPanel, ex);
+        }
+    }
+    public void ReturnBook(int TransactionId){
+        ReturnBookCommand command = new ReturnBookCommand();
+        command.TransactionId = TransactionId;
+        try {
+            transactionController.ReturnBook(command);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

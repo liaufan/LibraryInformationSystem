@@ -12,7 +12,8 @@ public class QueryBook {
     public String PublicationYear;
     public Boolean IsAvailable;
     public ArrayList<Book> Handle() throws SQLException {
-        ArrayList<Book> books = _context.QueryBooks("Id=-1 || IsAvailable=true");
+        ArrayList<Book> books = _context.QueryBooks("true");
+
         _context.Dispose();
 
         return books;

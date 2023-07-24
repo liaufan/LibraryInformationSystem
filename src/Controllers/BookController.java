@@ -3,6 +3,7 @@ package Controllers;
 import Applications.Book.AddBookCommand;
 import Applications.Book.GetAllBooksQuery;
 import Applications.Book.QueryBook;
+import Applications.Book.ReturnBookCommand;
 import Applications.Report.GetAvailableBooksQuery;
 import Models.Book;
 
@@ -19,4 +20,5 @@ public class BookController {
     public ArrayList<Book> QueryBooks(QueryBook query) throws SQLException {
         return query.Handle();
     }
+
 }

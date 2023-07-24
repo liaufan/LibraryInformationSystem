@@ -45,7 +45,7 @@
           <text value="View Available Books"/>
         </properties>
       </component>
-      <component id="266da" class="javax.swing.JButton" binding="viewAllTransactionButton" default-binding="true">
+      <component id="266da" class="javax.swing.JButton" binding="viewTransactionRange">
         <constraints>
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

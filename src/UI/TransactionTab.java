@@ -65,6 +65,7 @@ public class TransactionTab extends JPanel {
                 else{
                     JOptionPane.showMessageDialog(TransactionPanel, "Book is already returned");
                 }
+
             }
 
             @Override

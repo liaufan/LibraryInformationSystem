@@ -94,13 +94,59 @@ public class ApplicationDbContext {
                 sql += "'" + book.CreatedDate + "');";
             } else {
                 //Update existing row by Id
-                sql += "UPDATE Books SET";
+                sql += "UPDATE Books SET ";
                 sql += "Title = " + "'" + book.Title + "', ";
                 sql += "Author = " + "'" + book.Author + "', ";
                 sql += "PublicationYear = " + "'" + book.PublicationYear + "', ";
                 sql += "IsAvailable = " + book.IsAvailable + ", ";
                 sql += "CreatedDate = " + "'" + book.CreatedDate + "'";
                 sql += "WHERE Id = " + book.Id + ";";
+            }
+            System.out.println(sql);
+            statement.executeUpdate(sql);
+        }
+    }
+
+    public ArrayList<Borrower> QueryBorrowers(String whereClause) throws SQLException {
+        ArrayList<Borrower> responses = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Borrowers WHERE " + whereClause + ";");
+
+        while(resultSet.next()){
+            Borrower borrower = new Borrower();
+
+            borrower.Id = resultSet.getInt("Id");
+            borrower.Name = resultSet.getString("Name");
+            borrower.Email = resultSet.getString("Email");
+            borrower.Phone = resultSet.getString("Phone");
+            borrower.CreatedDate = resultSet.getDate("CreatedDate");
+
+            responses.add(borrower);
+        }
+
+        return responses;
+    }
+
+    public void UpdateBorrowers(ArrayList<Borrower> borrowers) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        for(Borrower borrower: borrowers){
+            String sql = "";
+            if(borrower.Id == 0 ){
+                //Insert new row
+                sql += "INSERT INTO Borrowers (Id, Name, Email, Phone, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + borrower.Name + "', ";
+                sql += "'" + borrower.Email + "', ";
+                sql += "'" + borrower.Phone + "', ";
+                sql += "'" + borrower.CreatedDate + "');";
+            } else {
+                //Update existing row by Id
+                sql += "UPDATE Borrowers SET";
+                sql += "Name = " + "'" + borrower.Name + "', ";
+                sql += "Email = " + "'" + borrower.Email + "', ";
+                sql += "Phone = " + "'" + borrower.Phone + "', ";
+                sql += "CreatedDate = " + "'" + borrower.CreatedDate + "'";
+                sql += "WHERE Id = " + borrower.Id + ";";
             }
 
             statement.executeUpdate(sql);

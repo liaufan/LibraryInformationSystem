@@ -20,6 +20,8 @@ public class QueryTransaction {
         ArrayList<Transaction> transactions = _context.QueryTransaction( " CreatedDate >= '" + this.StartDate +"'" + "&& CreatedDate <= '" + this.EndDate +"'");
         _context.Dispose();
 
-        return transactions;
+        transactions.add(transaction);
+        _context.AddTransaction(transactions);
+        _context.Dispose();
     }
 }

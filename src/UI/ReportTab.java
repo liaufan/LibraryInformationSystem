@@ -1,20 +1,14 @@
 package UI;
 
-import Applications.Report.GetAvailableBooksQuery;
-import Applications.Transaction.AddTransactionCommand;
-import Applications.Transaction.QueryAllTransactions;
-import Applications.Transaction.QueryTransaction;
+import Applications.Report.QueryAvailableBooks;
 import Controllers.ReportController;
-import Controllers.TransactionController;
 import Models.Book;
-import Models.Transaction;
 
 import javax.management.Query;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -46,9 +40,9 @@ public class ReportTab extends JPanel {
     }
 
     public void QueryAvailableBooks(){
-        GetAvailableBooksQuery query = new GetAvailableBooksQuery();
+        QueryAvailableBooks query = new QueryAvailableBooks();
         try{
-            allAvailableBooks = reportController.GetAvailableBook(query);
+            allAvailableBooks = reportController.GetAvailableBooks(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allAvailableBooks.size() > 0){
                 allBooksTable.setVisible(true);

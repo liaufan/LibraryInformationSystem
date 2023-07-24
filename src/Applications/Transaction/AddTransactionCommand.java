@@ -29,7 +29,8 @@ public class AddTransactionCommand {
         transaction.CreatedDate = new Date(System.currentTimeMillis());
 
         transactions.add(transaction);
-        _context.UpdateTransaction(transactions);
+        _context.AddTransaction(transactions);
+        _context.Dispose();
     }
 
 }

@@ -1,8 +1,5 @@
 package UI;
 
-import Applications.Book.GetAllBooksQuery;
-import Applications.Book.ReturnBookCommand;
-import Applications.Report.GetAvailableBooksQuery;
 import Applications.Transaction.QueryAllTransactions;
 import Controllers.TransactionController;
 import Models.Transaction;
@@ -11,9 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class TransactionTab extends JPanel {
@@ -62,7 +56,7 @@ public class TransactionTab extends JPanel {
     public void QueryAllTransactions() {
         QueryAllTransactions query = new QueryAllTransactions();
         try{
-            allTransactions = transactionController.GetAllTransaction(query);
+            allTransactions = transactionController.GetAllTransactions(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allTransactions.size() > 0){
                 transactionTable.setVisible(true);

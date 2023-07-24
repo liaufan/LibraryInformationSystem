@@ -46,6 +46,7 @@ public class BookTab extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 var bookId = allBooksTable.getValueAt(allBooksTable.getSelectedRow(), 0).toString();
+                System.out.println(bookId);
                 LoadRating(Integer.valueOf(bookId));
             }
 
@@ -87,50 +88,13 @@ public class BookTab extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
+                    var transactionID = allBooksTable.getValueAt(allBooksTable.getSelectedRow(), 0).toString();
 
-                    JTable ratingTable = new JTable();
-                    allBooks = bookController.GetAllBooks();
-                    DefaultTableModel tableModel = new DefaultTableModel();
-                    if (allBooks.size() > 0) {
-                        ratingTable.setVisible(true);
-                        tableModel.addColumn("Book Id");
-                        tableModel.addColumn("Book Title");
-                        tableModel.addColumn("Author");
-                        tableModel.addColumn("Publication Year");
-                        tableModel.addColumn("Is Available");
-                        tableModel.addColumn("Record Created Date");
-                        allBooks.forEach((book) -> {
-                            Object[] data = {book.Id, book.Title, book.Author, book.PublicationYear, book.IsAvailable, book.CreatedDate};
-                            tableModel.addRow(data);
-                        });
-                        ratingTable.setModel(tableModel);
-                        ratingTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                        ratingTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                        ratingTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-                        ratingTable.getColumnModel().getColumn(3).setPreferredWidth(80);
-                        ratingTable.getColumnModel().getColumn(4).setPreferredWidth(50);
-                        ratingTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-                    } else {
-                        ratingTable.setVisible(false);
-                    }
+                    LoadRating(Integer.valueOf(transactionID));
 
-
-                    JComponent[] dialog = new JComponent[]{
-                            new JLabel("BOOK NAME"),
-                            ratingTable
-                    };
-
-
-                     JOptionPane.showMessageDialog(null,dialog , "Book Recommendations", JOptionPane.PLAIN_MESSAGE);
-//                    var isReturned = transactionTable.getValueAt(transactionTable.getSelectedRow(), 5).toString();
-//                    if (res == 0 && isReturned == "false") {
-//                        var transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
-//                        ReturnBook(Integer.valueOf(transactionID));
-//                        QueryAllTransactions();
-//                    } else if (res == 0 && isReturned == "true") {
-//                        JOptionPane.showMessageDialog(TransactionPanel, "Book is already returned");
-//                    }
-                }catch(Exception ex){}
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(BookPanel, ex);
+                }
             }
 
             @Override
@@ -216,6 +180,7 @@ public class BookTab extends JPanel {
         QueryBookRatings query = new QueryBookRatings();
         query.BookId = BookId;
         try {
+            JTable allRatingTable = new JTable();
             ratings = bookController.QueryBookRating(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(ratings.size() > 0){
@@ -238,8 +203,12 @@ public class BookTab extends JPanel {
                 allRatingTable.getColumnModel().getColumn(4).setPreferredWidth(50);
                 allRatingTable.getColumnModel().getColumn(5).setPreferredWidth(100);
             } else {
-            //    allRatingTable.setVisible(false);
+                allRatingTable.setVisible(false);
             }
+            JComponent[] dialog = new JComponent[]{
+                    new JLabel("BOOK NAME"),
+                    allRatingTable
+            };
             if(ratings.size()>0){
                 LoadBooks();
                 JOptionPane.getFrameForComponent(allRatingTable);

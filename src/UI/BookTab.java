@@ -185,12 +185,14 @@ public class BookTab extends JPanel {
 
         QueryBookRatings query = new QueryBookRatings();
         query.BookId = BookId;
-        try {
 
+        try {
+            int avgRating = 0;
             JTable allRatingTable = new JTable();
             ratings = bookController.QueryBookRating(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(ratings.size() > 0){
+
                 allRatingTable.setVisible(true);
                 tableModel.addColumn("Id");
                 tableModel.addColumn("Book Id");
@@ -198,10 +200,12 @@ public class BookTab extends JPanel {
                 tableModel.addColumn("Borrower Name");
                 tableModel.addColumn("Rating");
                 tableModel.addColumn("Review");
-                ratings.forEach((rating) -> {
+                for(var rating : ratings) {
+                    avgRating += rating.Rating;
                     Object[] data = {rating.Id, rating.BookId, rating.BookName, rating.BorrowerName, rating.Rating, rating.Reviews};
                     tableModel.addRow(data);
-                });
+                };
+                avgRating = avgRating/ratings.size();
                 allRatingTable.setModel(tableModel);
                 allRatingTable.getColumnModel().getColumn(0).setPreferredWidth(50);
                 allRatingTable.getColumnModel().getColumn(1).setPreferredWidth(220);
@@ -213,7 +217,8 @@ public class BookTab extends JPanel {
                 allRatingTable.setVisible(false);
             }
             JComponent[] dialog = new JComponent[]{
-                    new JLabel("BOOK NAME"),
+                    new JLabel(ratings.get(0).BookName),
+                    new JLabel(String.valueOf(avgRating)),
                     new JScrollPane(allRatingTable)
             };
             if(ratings.size()>0){

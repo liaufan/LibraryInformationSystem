@@ -31,10 +31,10 @@ public class TransactionTab extends JPanel {
                     var transactionID = transactionTable.getValueAt(transactionTable.getSelectedRow(), 0).toString();
                     ReturnBook(Integer.valueOf(transactionID));
                     QueryAllTransactions();
-                }
-                else{
+                } else if (res==0 && isReturned=="true"){
                     JOptionPane.showMessageDialog(TransactionPanel, "Book is already returned");
                 }
+
             }
 
             @Override

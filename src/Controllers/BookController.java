@@ -20,7 +20,4 @@ public class BookController {
     public ArrayList<Book> GetAllBooks(QueryAllBooks query) throws SQLException {
         return query.Handle();
     }
-    public ArrayList<Book> QueryBooks(QueryBook query) throws SQLException {
-        return query.Handle();
-    }
 }

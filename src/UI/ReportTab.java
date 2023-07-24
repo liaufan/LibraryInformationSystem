@@ -31,7 +31,7 @@ public class ReportTab extends JPanel {
     public void QueryAvailableBooks(){
         QueryAvailableBooks query = new QueryAvailableBooks();
         try{
-            allAvailableBooks = reportController.GetAvailableBook(query);
+            allAvailableBooks = reportController.GetAvailableBooks(query);
             DefaultTableModel tableModel = new DefaultTableModel();
             if(allAvailableBooks.size() > 0){
                 allBooksTable.setVisible(true);

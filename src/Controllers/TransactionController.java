@@ -11,7 +11,7 @@ public class TransactionController {
     public void AddTransaction(AddTransactionCommand command) throws SQLException {
         command.Handle();
     }
-    public ArrayList<Transaction> GetAllTransaction(QueryAllTransactions query) throws SQLException {
+    public ArrayList<Transaction> GetAllTransactions(QueryAllTransactions query) throws SQLException {
         return query.Handle();
     }
 }

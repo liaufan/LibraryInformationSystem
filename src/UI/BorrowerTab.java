@@ -73,9 +73,9 @@ public class BorrowerTab extends JPanel {
                     tableModel.addRow(data);
                 });
                 allBorrowersTable.setModel(tableModel);
-                allBorrowersTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-                allBorrowersTable.getColumnModel().getColumn(1).setPreferredWidth(220);
-                allBorrowersTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+                allBorrowersTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+                allBorrowersTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+                allBorrowersTable.getColumnModel().getColumn(2).setPreferredWidth(120);
                 allBorrowersTable.getColumnModel().getColumn(3).setPreferredWidth(80);
                 allBorrowersTable.getColumnModel().getColumn(4).setPreferredWidth(100);
             } else {

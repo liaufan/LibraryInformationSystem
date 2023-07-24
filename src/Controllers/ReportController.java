@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReportController {
-    public ArrayList<Book> GetAvailableBook(QueryAvailableBooks query) throws SQLException {
+    public ArrayList<Book> GetAvailableBooks(QueryAvailableBooks query) throws SQLException {
         return query.Handle();
     }
 }

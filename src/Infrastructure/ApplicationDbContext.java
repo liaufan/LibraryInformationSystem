@@ -208,38 +208,6 @@ public class ApplicationDbContext {
         }
     }
 
-    public void UpdateTransaction(ArrayList<Transaction> transactions) throws SQLException {
-        Statement statement = connection.createStatement();
-        for(Transaction transaction: transactions){
-            String sql = "";
-            if(transaction.Id == 0 ){
-                //Insert new row
-                sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, ExpectedReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
-                sql += "'" + transaction.BookId + "', ";
-                sql += "'" + transaction.BorrowerId + "', ";
-                sql += "'" + transaction.BorrowDate + "', ";
-                sql += "'" + transaction.ReturnDate + "', ";
-                sql += "'" + transaction.ExpectedReturnDate + "', ";
-                sql += transaction.IsReturned + ", ";
-                sql += "'" + transaction.CreatedDate + "');";
-            } else {
-                //Update existing row by Id
-                sql += "UPDATE Transactions SET ";
-                sql += "BookId = '" + transaction.BookId + "', ";
-                sql += "BorrowerId = '" + transaction.BorrowerId + "', ";
-                sql += "BorrowDate = '" + transaction.BorrowDate + "', ";
-                sql += "ReturnDate = '" + new Date(System.currentTimeMillis()) + "', ";
-                sql += "ExpectedReturnDate = '" + transaction.ExpectedReturnDate + "', ";
-                sql += "IsReturned = '" + "1" + "', ";
-                sql += "CreatedDate = '" + transaction.CreatedDate + "' ";
-                sql += "WHERE Id = " + transaction.Id + ";";
-            }
-            System.out.println(sql);
-
-            statement.executeUpdate(sql);
-        }
-    }
-
     public void UpdateRating(ArrayList<Rating> ratings) throws SQLException {
         Statement statement = connection.createStatement();
         for(Rating rating: ratings){
@@ -284,7 +252,37 @@ public class ApplicationDbContext {
         return responses;
     }
 
+    public void UpdateTransaction(ArrayList<Transaction> transactions) throws SQLException {
+        Statement statement = connection.createStatement();
+        for(Transaction transaction: transactions){
+            String sql = "";
+            if(transaction.Id == 0 ){
+                //Insert new row
+                sql += "INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, ExpectedReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + transaction.BookId + "', ";
+                sql += "'" + transaction.BorrowerId + "', ";
+                sql += "'" + transaction.BorrowDate + "', ";
+                sql += "'" + transaction.ReturnDate + "', ";
+                sql += "'" + transaction.ExpectedReturnDate + "', ";
+                sql += transaction.IsReturned + ", ";
+                sql += "'" + transaction.CreatedDate + "');";
+            } else {
+                //Update existing row by Id
+                sql += "UPDATE Transactions SET ";
+                sql += "BookId = '" + transaction.BookId + "', ";
+                sql += "BorrowerId = '" + transaction.BorrowerId + "', ";
+                sql += "BorrowDate = '" + transaction.BorrowDate + "', ";
+                sql += "ReturnDate = '" + new Date(System.currentTimeMillis()) + "', ";
+                sql += "ExpectedReturnDate = '" + transaction.ExpectedReturnDate + "', ";
+                sql += "IsReturned = '" + "1" + "', ";
+                sql += "CreatedDate = '" + transaction.CreatedDate + "' ";
+                sql += "WHERE Id = " + transaction.Id + ";";
+            }
+            System.out.println(sql);
 
+            statement.executeUpdate(sql);
+        }
+    }
 
     public ArrayList<Transaction> QueryTransaction(String whereClause) throws SQLException {
         ArrayList<Transaction> responses = new ArrayList<>();
@@ -310,21 +308,45 @@ public class ApplicationDbContext {
         return responses;
     }
 
-    public ArrayList<Borrower> QueryBorrower(String whereClause) throws SQLException {
-        ArrayList<Borrower> responses = new ArrayList<>();
+    public void UpdateUsers(ArrayList<User> users) throws SQLException {
+        Statement statement = connection.createStatement();
+        for(User user: users){
+            String sql = "";
+            if(user.Id == 0 ){
+                //Insert new row
+                sql += "INSERT INTO Users (Id, Username, Password, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "'" + user.Username + "', ";
+                sql += "'" + user.Password + "', ";
+                sql += "'" + user.CreatedDate + "');";
+            } else {
+                //Update existing row by Id
+                sql += "UPDATE Users SET ";
+                sql += "Username = '" + user.Username + "', ";
+                sql += "Password = '" + user.Password + "', ";
+                sql += "CreatedDate = '" + user.CreatedDate + "' ";
+                sql += "WHERE Id = " + user.Id + ";";
+            }
+            System.out.println(sql);
+
+            statement.executeUpdate(sql);
+        }
+    }
+
+    public ArrayList<User> QueryUsers(String whereClause) throws SQLException {
+        ArrayList<User> responses = new ArrayList<>();
         Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM Borrowers WHERE " + whereClause + ";");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM Users WHERE " + whereClause + ";");
 
         while(resultSet.next()){
-            Borrower borrower = new Borrower();
+            User user = new User();
 
-            borrower.Id = resultSet.getInt("Id");
-            borrower.Name = resultSet.getString("Name");
-            borrower.Email = resultSet.getString("Email");
-            borrower.Phone = resultSet.getString("Phone");
-            borrower.CreatedDate = resultSet.getDate("CreatedDate");
-            responses.add(borrower);
+            user.Id = resultSet.getInt("Id");
+            user.Username = resultSet.getString("Username");
+            user.Password = resultSet.getString("Password");
+            user.CreatedDate = resultSet.getDate("CreatedDate");
+
+            responses.add(user);
         }
 
         return responses;
@@ -390,6 +412,19 @@ public class ApplicationDbContext {
 
             try {
                 String sql = "CREATE TABLE Ratings (";
+                Rating obj = new Rating();
+                for (Field field : obj.getClass().getFields()) {
+                    sql += field.getName() + " " + GetDatabaseType(field.getGenericType().toString()) + SetPrimaryKey(field.getName()) + ", ";
+                }
+                sql = sql.substring(0, sql.length() - 2);
+                sql += ");";
+                statement.executeUpdate(sql);
+                System.out.println(sql);
+            } catch (Exception ignored) {
+            } //Skip if table already created
+
+            try {
+                String sql = "CREATE TABLE Users (";
                 Rating obj = new Rating();
                 for (Field field : obj.getClass().getFields()) {
                     sql += field.getName() + " " + GetDatabaseType(field.getGenericType().toString()) + SetPrimaryKey(field.getName()) + ", ";

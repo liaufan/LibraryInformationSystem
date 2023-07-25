@@ -9,7 +9,7 @@ import java.awt.event.MouseListener;
 public class UserTab extends JPanel {
     private JTable allUsersTable;
 
-    public BookTab(){
+    public UserTab(){
         this.add(BookPanel);
 
         addBookButton.addActionListener(new ActionListener() {

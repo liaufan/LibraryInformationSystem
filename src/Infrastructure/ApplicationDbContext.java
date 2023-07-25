@@ -314,15 +314,19 @@ public class ApplicationDbContext {
             String sql = "";
             if(user.Id == 0 ){
                 //Insert new row
-                sql += "INSERT INTO Users (Id, Username, Password, CreatedDate) VALUES ( DEFAULT, ";
+                sql += "INSERT INTO Users (Id, Username, Password, Name, PhoneNumber,  CreatedDate) VALUES ( DEFAULT, ";
                 sql += "'" + user.Username + "', ";
                 sql += "'" + user.Password + "', ";
+                sql += "'" + user.Name + "', ";
+                sql += "'" + user.PhoneNumber + "', ";
                 sql += "'" + user.CreatedDate + "');";
             } else {
                 //Update existing row by Id
                 sql += "UPDATE Users SET ";
                 sql += "Username = '" + user.Username + "', ";
                 sql += "Password = '" + user.Password + "', ";
+                sql += "Name = '" + user.Name + "', ";
+                sql += "PhoneNumber = '" + user.PhoneNumber + "', ";
                 sql += "CreatedDate = '" + user.CreatedDate + "' ";
                 sql += "WHERE Id = " + user.Id + ";";
             }
@@ -344,6 +348,8 @@ public class ApplicationDbContext {
             user.Id = resultSet.getInt("Id");
             user.Username = resultSet.getString("Username");
             user.Password = resultSet.getString("Password");
+            user.Name = resultSet.getString("Name");
+            user.PhoneNumber = resultSet.getString("PhoneNumber");
             user.CreatedDate = resultSet.getDate("CreatedDate");
 
             responses.add(user);

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class CreateNewUserCommand {
     public String Username;
     public String Password;
+    public String Name;
+    public String PhoneNumber;
 
     private ApplicationDbContext _context = new ApplicationDbContext();
     public void Handle() throws Exception {
@@ -20,6 +22,8 @@ public class CreateNewUserCommand {
         User newUser = new User();
         newUser.Username = this.Username;
         newUser.Password = this.Password;
+        newUser.Name = this.Name;
+        newUser.PhoneNumber = this.PhoneNumber;
         newUser.CreatedDate = new Date(System.currentTimeMillis());
 
         _context.UpdateUsers(users);

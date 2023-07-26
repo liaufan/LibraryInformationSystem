@@ -10,7 +10,7 @@ public class LoginCommand {
     private ApplicationDbContext _context = new ApplicationDbContext();
 
     public boolean Handle() throws Exception {
-        var users = _context.QueryUsers("Username = " + Username);
+        var users = _context.QueryUsers("Username = '" + Username + "'");
         if(users.size() == 0){
             throw new Exception("Username not found!");
         }

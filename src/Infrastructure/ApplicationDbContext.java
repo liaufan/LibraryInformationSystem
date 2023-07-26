@@ -311,6 +311,8 @@ public class ApplicationDbContext {
     public void UpdateUsers(ArrayList<User> users) throws SQLException {
         Statement statement = connection.createStatement();
         for(User user: users){
+            System.out.println("CREATING USER");
+            System.out.println(user);
             String sql = "";
             if(user.Id == 0 ){
                 //Insert new row
@@ -431,7 +433,7 @@ public class ApplicationDbContext {
 
             try {
                 String sql = "CREATE TABLE Users (";
-                Rating obj = new Rating();
+                User obj = new User();
                 for (Field field : obj.getClass().getFields()) {
                     sql += field.getName() + " " + GetDatabaseType(field.getGenericType().toString()) + SetPrimaryKey(field.getName()) + ", ";
                 }
@@ -445,8 +447,8 @@ public class ApplicationDbContext {
             // TODO: pump initialize data for all tables
             var books = QueryBooks("true");
             if(books.size() == 0){
-                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Little Prince', 'Antoine de Saint-Exupery', '1943', true, '2023-07-24')");
-                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'Harry Potter and the Philosophers Stone', 'J. K. Rowling', '1997', true, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Little Prince', 'Antoine de Saint-Exupery', '1943', false, '2023-07-24')");
+                statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'Harry Potter and the Philosophers Stone', 'J. K. Rowling', '1997', false, '2023-07-24')");
                 statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'Dream of the Red Chamber', 'Cao Xueqin', '1791', true, '2023-07-24')");
                 statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Hobbit', 'J. R. R. Tolkien', '1937', true, '2023-07-24')");
                 statement.executeUpdate("INSERT INTO Books (Id, Title, Author, PublicationYear, IsAvailable, CreatedDate) VALUES ( DEFAULT, 'The Hunger Games', 'Suzanne Collins', '2008', true, '2023-07-24')");
@@ -463,6 +465,17 @@ public class ApplicationDbContext {
             if(reservations.size() == 0){
                 statement.executeUpdate("INSERT INTO Reservations (Id, BookId, BookName, BorrowerId, BorrowerName, BorrowDate, ReturnDate, CreatedDate) VALUES ( DEFAULT, 1, 'The Little Prince', 1, 'John', '2023-07-20','2023-07-31','2023-07-24')");
                 statement.executeUpdate("INSERT INTO Reservations (Id, BookId, BookName, BorrowerId, BorrowerName, BorrowDate, ReturnDate, CreatedDate) VALUES ( DEFAULT, 2, 'Harry Potter and the Philosophers Stone', 2, 'Cindy', '2023-07-30','2023-08-15','2023-07-24')");
+            }
+
+            var transactions = QueryTransaction("true");
+            if(transactions.size() == 0){
+                statement.executeUpdate("INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, ExpectedReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, 1, 2,'2023-07-01', '1901-01-01', '2023-07-24', false, '2023-07-01')");
+                statement.executeUpdate("INSERT INTO Transactions (Id, BookId, BorrowerId, BorrowDate, ReturnDate, ExpectedReturnDate, IsReturned, CreatedDate) VALUES ( DEFAULT, 2, 3,'2023-07-01', '1901-01-01', '2023-07-24', false, '2023-07-01')");
+            }
+
+            var users = QueryUsers("true");
+            if(users.size() == 0){
+                statement.executeUpdate("INSERT INTO Users (Id, Username, Password, Name, PhoneNumber, CreatedDate) VALUES ( DEFAULT, 'admin', 'abcd1234', 'Admin User','01132228332','2023-07-24')");
             }
         }catch(SQLException ex){
             System.out.println(ex);

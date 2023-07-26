@@ -15,7 +15,6 @@ public class Main {
         var login = Login();
 
         while(!login){
-            JOptionPane.showMessageDialog(null, "Invalid username or password! You must login to access the Library Information System.");
             login = Login();
         }
 
@@ -26,7 +25,7 @@ public class Main {
         UserController userController = new UserController();
         JTextField usernameField = new JTextField(5);
         JPasswordField passwordField = new JPasswordField(5);
-        Object[] options = { "Login"};
+        Object[] options = { "Login" };
 
         JComponent[] dialog = new JComponent[]{
                 new JLabel("Username:"),
@@ -40,15 +39,19 @@ public class Main {
             System.exit(0);
         }
 
-        LoginCommand command = new LoginCommand();
-        command.Username = usernameField.getText();
-        command.Password = passwordField.getText();
-        try{
-            return userController.Login(command);
-        } catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+        if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Please input all the fields");
             return false;
+        } else {
+            LoginCommand command = new LoginCommand();
+            command.Username = usernameField.getText();
+            command.Password = passwordField.getText();
+            try{
+                return userController.Login(command);
+            } catch(Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+                return false;
+            }
         }
-
     }
 }

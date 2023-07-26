@@ -18,6 +18,11 @@ public class CreateNewUserCommand {
             throw new Exception("Username and Password cannot be empty!");
         }
 
+        var existingUsers = _context.QueryUsers("Username = '" + this.Username + "'");
+        if(existingUsers.size() > 0){
+            throw new Exception("User already exist");
+        }
+
         ArrayList<User> users = new ArrayList<>();
         User newUser = new User();
         newUser.Username = this.Username;
@@ -25,6 +30,7 @@ public class CreateNewUserCommand {
         newUser.Name = this.Name;
         newUser.PhoneNumber = this.PhoneNumber;
         newUser.CreatedDate = new Date(System.currentTimeMillis());
+        users.add(newUser);
 
         _context.UpdateUsers(users);
         _context.Dispose();

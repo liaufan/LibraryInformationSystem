@@ -28,12 +28,14 @@ public class Library extends JFrame {
         TransactionTab transactionTab = new TransactionTab();
         ReportTab reportTab = new ReportTab();
         ReservationTab reservationTab = new ReservationTab();
+        UserTab userTab = new UserTab();
 
         MainTabbedPane.addTab("Books", bookTab);
         MainTabbedPane.addTab("Borrowers", borrowerTab);
         MainTabbedPane.addTab("Transactions", transactionTab);
         MainTabbedPane.addTab("Reservations", reservationTab);
         MainTabbedPane.addTab("Reports", reportTab);
+        MainTabbedPane.addTab("Admin Users", userTab);
 
         MainTabbedPane.addChangeListener(new ChangeListener() {
             @Override

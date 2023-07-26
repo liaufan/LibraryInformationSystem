@@ -9,3 +9,5 @@ Program will automatically create database schemas and insert initialize data fo
 DatabaseSeed() function in Infrastructure > ApplicationDbContext.Java
 
 Run on the Main.Java file with Intellij.
+
+Default Admin User: Username: admin, Password: abcd1234
